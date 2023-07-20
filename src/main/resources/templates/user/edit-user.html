@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymealaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="#{web.title}"></title>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    .centered-form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    /* Custom styling for the form */
+    .custom-form {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container centered-form">
+  <div class="row">
+    <div class="col-md-6">
+
+      <form action="#" th:action="@{/user/edit/__${user.username}__}" method="post"
+            th:object="${user}" class="custom-form" style="width: 500px">
+        <h1 class="text-center mb-4">User Edit</h1>
+
+        <div class="form-group mb-2">
+          <label for="name">Username</label>
+          <p class="form-control" th:text="*{username}" id="username">
+        </div>
+
+        <div class="form-group mb-2">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" th:field="*{password}" th:value="*{password}">
+        </div>
+
+        <div class="form-group mb2">
+          <label for="category">Role</label>
+          <select th:field="*{userRole.role}" class="form-control mb-2" id="category">
+            <option th:each="role : ${roles}" th:value="${role.role}" th:text="${role.role}">
+            </option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Edit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

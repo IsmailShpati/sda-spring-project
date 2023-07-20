@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymealaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="#{web.title}"></title>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    /* Custom styling for the scrollable container */
+    .scrollable-container {
+      height: 100vh; /* Take the whole available vertical space */
+      display: flex;
+      flex-wrap: wrap;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    /* Custom class for darker card borders */
+    .custom-card {
+      border: 2px solid rgba(0, 0, 0, 0.5);
+    }
+
+    .card {
+      flex: 0 0 calc(25% - 20px); /* Show up to 4 cards horizontally with 20px spacing */
+      margin: 10px;
+    }
+
+    .card-body{
+      background-color: #e9ecef;
+    }
+
+
+    /* Set the maximum width and height of the images */
+    .card-img-top {
+      max-width: 100%;
+      height: 300px; /* Adjust the height as needed */
+      object-fit: contain;
+    }
+    .card-bottom {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      padding: 10px;
+      background-color: #f8f9fa; /* Change to your desired color */
+    }
+
+    /* Custom class for the links */
+    .card-bottom a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .centered-button {
+      display: flex;
+      justify-content: center;
+    }
+
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-12 text-center">
+      <h1 class="text-center" th:text="#{users.management.title}"></h1>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="centered-button">
+        <a th:href="@{/register}" class="btn btn-success">Add User</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="scrollable-container">
+        <!-- Repeat the card content for as many elements as needed -->
+        <div th:each="user: ${users}" class="card custom-card">
+
+          <div class="card-body">
+            <h5 class="card-title" th:text="${user.username}"></h5>
+            <p class="card-text" th:text="'Role: ' + ${user.userRole.role}"></p>
+         </div>
+
+          <div class="card-bottom">
+            <a th:href="@{/user/edit/__${user.username}__}"
+               data-toggle="tooltip" data-placement="top" title="Edit">
+              📝
+            </a>
+
+            <form action="#" th:action="@{/user/delete/__${user.username}__}" method="post">
+              <button type="submit">❌️</button>
+            </form>
+            <!--                            <a th:href="@{/product/delete/__${product.id}__}" data-toggle="tooltip" data-placement="top" title="Delete">❌️</a>-->
+          </div>
+        </div>
+
+      </div>
+    </div>
+</body>
+</html>
